@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Administrador | MusicIk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+ 
+<div class="container">
+ 
+  <!-- ===== HEADER ===== -->
+  <header>
+    <h1>
+      <span class="header-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/><path d="m16.5 15.5 1.5 1.5 3-3"/></svg>
+      </span>
+      Panel de Administración
+    </h1>
+    <button id="cerrarSesion">
+      <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+      Cerrar sesión
+    </button>
+  </header>
+ 
+  <!-- ===== TABLA ===== -->
+  <section class="tabla">
+    <div class="title">
+      <div>
+        <h2>Usuarios registrados</h2>
+        <p class="subtitle" id="totalUsuarios">Cargando…</p>
+      </div>
+      <button id="btnAgregar">
+        <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+        Agregar usuario
+      </button>
+    </div>
+ 
+    <div class="tabla-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th class="th-acciones">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tablaUsuarios"></tbody>
+      </table>
+ 
+      <div class="estado-carga" id="estadoCarga">
+        <span class="spinner"></span>
+        Cargando usuarios…
+      </div>
+ 
+      <div class="estado-vacio" id="estadoVacio" style="display:none">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        <p>No hay usuarios registrados todavía</p>
+      </div>
+ 
+      <div class="estado-error" id="estadoError" style="display:none">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg>
+        <p id="mensajeError">No se pudo conectar con el servidor</p>
+        <button id="btnReintentar">Reintentar</button>
+      </div>
+    </div>
+  </section>
+</div>
+ 
+<!-- ===== MODAL: Agregar / Editar usuario ===== -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">Agregar usuario</h3>
+      <button class="modal-close" id="modalClose" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+ 
+    <form id="userForm">
+      <input type="hidden" id="formId">
+ 
+      <label class="form-label">Nombre</label>
+      <input type="text" id="formNombre" class="form-input" placeholder="Ej. Leti" required>
+ 
+      <label class="form-label">Correo electrónico</label>
+      <input type="email" id="formCorreo" class="form-input" placeholder="correo@ejemplo.com" required>
+ 
+      <label class="form-label" id="labelPassword">Contraseña</label>
+      <input type="text" id="formPassword" class="form-input" placeholder="Contraseña">
+ 
+      <label class="form-label">Rol</label>
+      <div class="role-select">
+        <label class="role-option">
+          <input type="radio" name="rol" value="usuario" checked>
+          <span>Usuario</span>
+        </label>
+        <label class="role-option">
+          <input type="radio" name="rol" value="admin">
+          <span>Admin</span>
+        </label>
+      </div>
+ 
+      <p class="form-error" id="formError"></p>
+ 
+      <div class="modal-actions">
+        <button type="button" class="btn-ghost" id="cancelBtn">Cancelar</button>
+        <button type="submit" class="btn-primary" id="saveBtn">
+          <span class="btn-text">Guardar</span>
+          <span class="btn-spinner"></span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+ 
+<!-- ===== MODAL: Confirmar borrado ===== -->
+<div class="modal-overlay" id="deleteOverlay">
+  <div class="modal modal-small">
+    <div class="delete-icon">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+    </div>
+    <h3>¿Eliminar este usuario?</h3>
+    <p class="subtitle" id="deleteNombre">Esta acción no se puede deshacer.</p>
+    <div class="modal-actions center">
+      <button type="button" class="btn-ghost" id="cancelDeleteBtn">Cancelar</button>
+      <button type="button" class="btn-danger" id="confirmDeleteBtn">
+        <span class="btn-text">Sí, eliminar</span>
+        <span class="btn-spinner"></span>
+      </button>
+    </div>
+  </div>
+</div>
+ 
+<!-- Toast de confirmación -->
+<div class="toast" id="toast"></div>
+ 
+<script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+/* Importar los estilos generales */
+@import url("home.css");
+
+/* ===========================
+   ÁLBUMES
+=========================== */
+
+.albumes-section{
+    animation: fadeUp .5s ease;
+}
+
+.album-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+    gap:25px;
+}
+
+.album-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+    transition:.3s;
+    cursor:pointer;
+}
+
+.album-card:hover{
+    transform:translateY(-8px);
+    border-color:var(--accent-2);
+    box-shadow:0 10px 25px rgba(0,0,0,.35);
+}
+
+.album-card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.album-info{
+    padding:18px;
+}
+
+.album-info h3{
+    margin-bottom:8px;
+}
+
+.album-info p{
+    color:var(--text-dim);
+    margin-bottom:15px;
+}
+
+.album-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}

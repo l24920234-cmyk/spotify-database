@@ -1,0 +1,93 @@
+/* ==========================================
+   MusicIk - album.css
+========================================== */
+
+@import url("playlist.css");
+
+/* Cambiar únicamente algunos detalles */
+
+#albumImage{
+
+    width:250px;
+
+    height:250px;
+
+    object-fit:cover;
+
+    border-radius:20px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+
+}
+
+.song-cover{
+
+    width:60px;
+
+    height:60px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+}
+
+.favoriteBtn{
+
+    background:none;
+
+    border:none;
+
+    color:#ff4fa3;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.favoriteBtn:hover{
+
+    transform:scale(1.2);
+
+}
+
+.favoriteBtn.active{
+
+    color:#ff2d8d;
+
+}
+
+.song-buttons{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.playing{
+
+    animation:spin 8s linear infinite;
+
+}
+
+@keyframes spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
