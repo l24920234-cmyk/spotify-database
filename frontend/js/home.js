@@ -92,14 +92,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Obtener canciones
             const respuestaCanciones =
-                await fetch(`${window.location.protocol}//${window.location.hostname}:3001/api/canciones`);
+                await fetch(`${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}/api/canciones`);
 
             const canciones = await respuestaCanciones.json();
 
             // Obtener favoritos
             const respuestaFavoritos =
                 await fetch(
-                    `${window.location.protocol}//${window.location.hostname}:3001/api/favoritos/${usuario.id}`
+                    `${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}/api/favoritos/${usuario.id}`
                 );
 
             const favoritos = await respuestaFavoritos.json();
@@ -739,7 +739,7 @@ document.body.addEventListener("click", async (e) => {
 
     if (btn.classList.contains("active")) {
 
-       await fetch(`${window.location.protocol}//${window.location.hostname}:3001/api/favoritos`, {
+      await fetch(`${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}/api/favoritos`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
@@ -751,7 +751,7 @@ document.body.addEventListener("click", async (e) => {
 
     } else {
 
-        await fetch(`${window.location.protocol}//${window.location.hostname}:3001/api/favoritos`, {
+        await fetch(`${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}/api/favoritos`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

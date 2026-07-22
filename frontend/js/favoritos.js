@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
 
         const respuesta = await fetch(
-            `${window.location.protocol}//${window.location.hostname}:3001/api/favoritos/${usuario.id}`
+            `${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}/api/favoritos/${usuario.id}`
         );
 
         const canciones = await respuesta.json();

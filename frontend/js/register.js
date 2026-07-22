@@ -5,7 +5,7 @@
 // conexión real al backend.
 // ============================================================
  
-const API_BASE = `${window.location.protocol}//${window.location.hostname}:3001/api`;
+const API_BASE = `${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}/api`;
 console.log("✅ register.js cargó");
  
 document.addEventListener('DOMContentLoaded', () => {
