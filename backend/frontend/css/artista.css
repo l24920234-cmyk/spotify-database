@@ -1,0 +1,101 @@
+/* ==========================================
+   MusicIk - artista.css
+========================================== */
+
+@import url("playlist.css");
+
+/* ---------- Imagen principal ---------- */
+
+#artistImage{
+
+    width:250px;
+
+    height:250px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    border:5px solid #ff4fa3;
+
+    box-shadow:0 15px 35px rgba(255,79,163,.35);
+
+}
+
+/* ---------- Portadas de canciones ---------- */
+
+.song-cover{
+
+    width:60px;
+
+    height:60px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+}
+
+/* ---------- Botones ---------- */
+
+.song-buttons{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.favoriteBtn{
+
+    background:none;
+
+    border:none;
+
+    font-size:24px;
+
+    color:#ff4fa3;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.favoriteBtn:hover{
+
+    transform:scale(1.2);
+
+}
+
+.favoriteBtn.active{
+
+    color:#ff2d8d;
+
+}
+
+/* ---------- Animación de la portada ---------- */
+
+.playing{
+
+    animation:spin 8s linear infinite;
+
+}
+
+@keyframes spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}

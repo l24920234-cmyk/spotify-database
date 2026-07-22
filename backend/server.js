@@ -19,7 +19,13 @@ app.use(cors());
 app.use(express.json());
 
 // Servir los archivos del frontend
-app.use(express.static(path.join(__dirname, "../frontend")));
+const fs = require("fs");
+const frontendCandidates = [
+    path.join(__dirname, "../frontend"),
+    path.join(__dirname, "frontend")
+];
+const frontendPath = frontendCandidates.find(p => fs.existsSync(p)) || frontendCandidates[0];
+app.use(express.static(frontendPath));
 
 app.get("/", (req, res) => {
     res.redirect("/login.html");

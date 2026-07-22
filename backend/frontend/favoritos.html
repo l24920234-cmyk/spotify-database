@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MusicIk — Favoritos</title>
+ 
+<!-- Mismas fuentes que login.html: "Outfit" para títulos/marca, "Inter" para texto normal -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+ 
+<!-- Todos los estilos de esta página -->
+<link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+ 
+<!-- 
+  ============================================================
+  .app = el contenedor de TODA la interfaz. En el CSS es un grid con 
+  varias zonas (sidebar, main, right, player), como si fuera un tablero 
+  dividido en regiones donde cada bloque de abajo ocupa una región 
+  específica.
+  ============================================================ 
+-->
+<div class="app">
+ 
+  <!-- ===== SIDEBAR (menú lateral izquierdo) ===== -->
+  <aside class="sidebar">
+ 
+    <!-- Logo + nombre de la marca (igual que en login.html) -->
+    <div class="brand">
+      <span class="brand-icon">♪</span>
+      <span class="brand-name">MusicIk</span>
+    </div>
+ 
+    <!-- 
+      Menú de navegación principal. Cada link tiene un ícono SVG + texto. 
+      El de "Inicio" tiene la clase "active" para marcarlo como la página 
+      actual (fondo resaltado, vía CSS). Los demás (Explorar, Favoritos, 
+      etc.) apuntan a "#" porque todavía no tienen una página real 
+      conectada — son placeholders visuales por ahora.
+      "data-tip" es un atributo personalizado (no hace nada por sí solo en 
+      HTML/CSS puro) que se puede usar más adelante para mostrar un tooltip 
+      con JavaScript o CSS, si se decide agregar esa función.
+    -->
+    <nav class="nav">
+      <a href="home.html" class="nav-item" data-tip="Inicio">
+        <svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+        <span>Inicio</span>
+      </a>
+      <a href="explorar.html" class="nav-item" data-tip="Explorar">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <span>Explorar</span>
+      </a>
+     <a href="favoritos.html" class="nav-item active" data-tip="Favoritos">
+        <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.35-9.5-8.5C.7 8 2 4.5 5.5 4.5 8 4.5 9.5 6 12 8.5c2.5-2.5 4-4 6.5-4C22 4.5 23.3 8 21.5 11.5 19 15.65 12 20 12 20z"/></svg>
+        <span>Favoritos</span>
+      </a>
+      <a href="#" class="nav-item" data-tip="Playlists">
+        <svg viewBox="0 0 24 24"><path d="M4 6h13M4 12h13M4 18h9"/><circle cx="19" cy="16" r="2.5"/><path d="M19 6v10"/></svg>
+        <span>Playlists</span>
+      </a>
+      <a href="#" class="nav-item" data-tip="Álbumes">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/></svg>
+        <span>Álbumes</span>
+      </a>
+      <a href="#" class="nav-item" data-tip="Artistas">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        <span>Artistas</span>
+      </a>
+      <a href="#" class="nav-item" data-tip="Podcasts">
+        <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="12" rx="2"/><path d="M8 21h8M12 15v6"/></svg>
+        <span>Podcasts</span>
+      </a>
+    </nav>
+ 
+    <!-- 
+      Link de Configuración, FUERA del <nav>, pegado abajo (el CSS lo 
+      empuja al fondo del sidebar con flexbox). La clase "settings" es solo 
+      para darle un margen extra que lo separe visualmente del resto del 
+      menú.
+    -->
+    <a href="#" class="nav-item settings" data-tip="Configuración">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.11-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.64 9.4a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1z"/></svg>
+      <span>Configuración</span>
+    </a>
+ 
+    <!-- 
+      Mini reproductor fijo dentro del sidebar (muestra qué está sonando, 
+      con su propia mini portada + mini ecualizador animado). Es una 
+      versión resumida de la barra de reproductor grande de abajo del todo 
+      — home.js actualiza AMBAS a la vez cuando cambias de canción, para 
+      que siempre muestren la misma información.
+    -->
+    <div class="now-card">
+      <div class="now-cover">
+        <img src="assets/images/covers/dreams.jpg" alt="">
+ 
+        <!-- 
+          Las 3 barritas del mini ecualizador. A diferencia del ecualizador 
+          grande de login.html (que se genera con JavaScript), este es fijo 
+          en el HTML: solo 3 <span> vacíos, y el CSS les da su altura y 
+          animación mediante @keyframes (ver "eq" en home.css)
+        -->
+        <div class="eq"><span></span><span></span><span></span></div>
+      </div>
+      <div class="now-info">
+        <p class="now-title">Dreams</p>
+        <p class="now-artist">Imagine Music</p>
+      </div>
+ 
+      <!-- 
+        Botón de "me gusta" con la clase "active" ya puesta de entrada 
+        (por eso aparece rosa desde que cargas la página, simulando que 
+        esta canción ya estaba marcada como favorita)
+      -->
+      <button class="like-btn active" aria-label="Me gusta">
+        <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.35-9.5-8.5C.7 8 2 4.5 5.5 4.5 8 4.5 9.5 6 12 8.5c2.5-2.5 4-4 6.5-4C22 4.5 23.3 8 21.5 11.5 19 15.65 12 20 12 20z"/></svg>
+      </button>
+    </div>
+  </aside>
+ 
+  <!-- ===== MAIN (columna central, lo más ancho de la pantalla) ===== -->
+  <main class="main">
+ 
+    <!-- Barra superior: buscador + notificaciones + perfil -->
+    <header class="topbar">
+      <div class="search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="text" placeholder="Buscar canciones, artistas, álbumes…">
+        <button class="filter-btn" aria-label="Filtros">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16M8 12h12M12 18h8"/><circle cx="5" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/></svg>
+        </button>
+      </div>
+      <div class="topbar-actions">
+ 
+        <!-- Campanita de notificaciones, con un punto rosa (.dot) marcando que hay algo nuevo -->
+        <button class="bell-btn" aria-label="Notificaciones">
+          <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5H4.5S6 12 6 8z"/><path d="M9.5 17a2.5 2.5 0 0 0 5 0"/></svg>
+          <span class="dot"></span>
+        </button>
+ 
+        <!-- 
+          Botón de perfil: foto + nombre + flechita hacia abajo (por ahora 
+          es solo un botón visual, sin menú desplegable conectado en esta 
+          versión del archivo)
+        -->
+        <button class="profile">
+          <img src="assets/images/profile/leti.jpg" alt="Leti">
+          <span>Leti</span>
+          <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+    </header>
+ 
+    <!-- 
+      Contenedor con scroll propio (independiente del resto de la 
+      pantalla). Todo lo que esté DENTRO de este div puede crecer más allá 
+      de lo que cabe en la pantalla, y el usuario puede desplazarse 
+      verticalmente solo dentro de esta zona (mientras el sidebar y el 
+      player de abajo se quedan fijos, sin moverse).
+    -->
+    <div class="scroll-area">
+ 
+      <!-- ===== HERO (el banner grande de bienvenida) ===== -->
+      <section class="hero">
+ 
+        <!-- 
+          La img de fondo del banner. "--img" es una variable CSS que 
+          home.js usa para cambiarla cuando el carrusel avanza de slide; 
+          "background-image" repite esa misma img pero con un degradado 
+          oscuro encima (para que el texto blanco de arriba siga siendo 
+          legible sobre cualquier foto)
+        -->
+        <div class="hero-slide active" style="--img:url('assets/images/hero/hero-1.jpg'); background-image:linear-gradient(180deg, rgba(12,10,20,.15), rgba(12,10,20,.75)), url('assets/images/hero/hero-1.jpg')"></div>
+ 
+        <div class="hero-content">
+          <p class="hero-greeting">¡Hola, Leti! <span class="wave">👋</span></p>
+          <h1>Disfruta tu música favorita</h1>
+          <button class="btn-play-all" id="playAllBtn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            Reproducir todo
+          </button>
+        </div>
+ 
+        <!-- 
+          Los 3 puntitos indicadores del carrusel (el primero con la clase 
+          "active" para marcar cuál slide está mostrándose). home.js les 
+          agrega el evento de click para cambiar de slide manualmente, y 
+          también los actualiza solo cada tantos segundos.
+        -->
+        <div class="hero-dots">
+          <button class="dot-ind active"></button>
+          <button class="dot-ind"></button>
+          <button class="dot-ind"></button>
+        </div>
+      </section>
+ 
+      <!-- 
+        ===== RECOMENDADO PARA TI =====
+        El <div class="card-grid" id="recommendedGrid"></div> está VACÍO a 
+        propósito: home.js genera todas las tarjetas de canciones con 
+        JavaScript (a partir de un arreglo de datos) y las inserta aquí 
+        adentro. Esto facilita agregar/quitar canciones sin tener que tocar 
+        el HTML directamente cada vez — solo se edita el arreglo en el JS.
+      -->
+      <section class="row">
+    <div class="row-head">
+        <h2>Mis favoritos</h2>
+    </div>
+
+    <div class="card-grid" id="favoritosGrid"></div>
+</section>
+ 
+      <!-- 
+        Botón flotante de "bajar para ver más". home.js calcula si todavía 
+        hay contenido sin ver más abajo del scroll, y si es así, muestra 
+        este botón (con una animación de rebote) para invitar a seguir 
+        bajando; lo oculta automáticamente al llegar al final.
+      -->
+      <button class="scroll-hint" id="scrollHint" aria-label="Bajar para ver más">
+        <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+ 
+    </div>
+  </main>
+ 
+  <!-- 
+    ===== RIGHT PANEL (columna derecha) =====
+    Al igual que los "card-grid" de arriba, las listas <ul> de aquí abajo 
+    están vacías en el HTML — home.js las llena dinámicamente con 
+    JavaScript a partir de sus propios arreglos de datos.
+  -->
+  <aside class="right-panel">
+    <div class="panel-block">
+      <h3>Escuchado recientemente</h3>
+      <ul class="recent-list" id="recentList"></ul>
+    </div>
+ 
+    <div class="panel-block">
+      <div class="row-head tight">
+        <h3>Playlists para ti</h3>
+        <a href="#" class="see-all">Ver todo</a>
+      </div>
+      <ul class="playlist-list" id="playlistList"></ul>
+    </div>
+  </aside>
+ 
+  <!-- 
+    ===== PLAYER BAR (la barra de reproducción, fija en la parte inferior) =====
+    Esta es la versión GRANDE/completa del reproductor (a diferencia del 
+    mini reproductor "now-card" del sidebar). Se divide en 3 partes: 
+    información de la canción (izquierda), controles + progreso (centro), 
+    y volumen/extras (derecha).
+  -->
+  <footer class="player-bar">
+ 
+    <!-- ---- Parte izquierda: portada + nombre de la canción ---- -->
+    <div class="player-track">
+      <img id="playerCover" src="assets/images/covers/dreams.jpg" alt="">
+      <div>
+        <p class="p-title" id="playerTitle">Dreams</p>
+        <p class="p-artist" id="playerArtist">Imagine Music</p>
+      </div>
+      <button class="like-btn active" id="playerLike" aria-label="Me gusta">
+        <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.35-9.5-8.5C.7 8 2 4.5 5.5 4.5 8 4.5 9.5 6 12 8.5c2.5-2.5 4-4 6.5-4C22 4.5 23.3 8 21.5 11.5 19 15.65 12 20 12 20z"/></svg>
+      </button>
+    </div>
+ 
+    <!-- ---- Parte central: botones de control + barra de progreso ---- -->
+    <div class="player-center">
+      <div class="player-controls">
+        <!-- Aleatorio (shuffle): home.js solo le alterna la clase "active" al hacer click, es visual, no reordena canciones de verdad todavía -->
+        <button class="ctrl" aria-label="Aleatorio" id="shuffleBtn">
+          <svg viewBox="0 0 24 24"><path d="M4 6h4l7 12h5M4 18h4l2.5-4.3M15 6h5l-2-2m2 2-2 2M15 18h5l-2 2m2-2-2-2"/></svg>
+        </button>
+ 
+        <!-- Canción anterior (sin funcionalidad conectada todavía en esta versión) -->
+        <button class="ctrl" id="prevBtn" aria-label="Anterior">
+          <svg viewBox="0 0 24 24"><path d="M19 5v14L8 12zM6 5v14"/></svg>
+        </button>
+ 
+        <!-- 
+          Botón central de Play/Pausa. Tiene DOS íconos SVG superpuestos 
+          (playIcon y pauseIcon); pauseIcon empieza oculto 
+          (style="display:none") y home.js alterna cuál de los dos se 
+          muestra según si está sonando o pausado
+        -->
+        <button class="ctrl play" id="playBtn" aria-label="Reproducir">
+          <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+        </button>
+ 
+        <!-- Siguiente canción (sin funcionalidad conectada todavía en esta versión) -->
+       <button class="ctrl" id="nextBtn" aria-label="Siguiente">
+          <svg viewBox="0 0 24 24"><path d="M5 5v14l11-7zM18 5v14"/></svg>
+        </button>
+ 
+        <!-- Repetir: igual que shuffle, por ahora solo alterna su propio estado visual "active" -->
+        <button class="ctrl" aria-label="Repetir" id="repeatBtn">
+          <svg viewBox="0 0 24 24"><path d="M17 2l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        </button>
+      </div>
+ 
+      <!-- 
+        Barra de progreso de la canción: 
+        - progress-fill = la parte ya "avanzada" (rosa/morado), su ancho lo 
+          controla home.js según los segundos transcurridos
+        - progress-handle = el circulito que se puede arrastrar/hacer click
+        - curTime/durTime = tiempo actual / duración total, en formato "1:24"
+        Los valores 1:24 y 3:37 de aquí son solo el estado INICIAL antes de 
+        que home.js haga sus cálculos; en cuanto carga la página, empieza a 
+        actualizarlos solo.
+      -->
+      <div class="progress-row">
+        <span class="time" id="curTime">1:24</span>
+        <div class="progress-track" id="progressTrack">
+          <div class="progress-fill" id="progressFill"></div>
+          <div class="progress-handle" id="progressHandle"></div>
+        </div>
+        <span class="time" id="durTime">3:37</span>
+      </div>
+    </div>
+ 
+    <!-- ---- Parte derecha: volumen + botones extra ---- -->
+    <div class="player-extra">
+      <button class="ctrl" aria-label="Volumen">
+        <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9z"/><path d="M17 8a5 5 0 0 1 0 8"/></svg>
+      </button>
+ 
+      <!-- Misma idea que la barra de progreso, pero para el volumen (fill + handle arrastrable) -->
+      <div class="volume-track" id="volumeTrack">
+        <div class="volume-fill" id="volumeFill"></div>
+        <div class="volume-handle" id="volumeHandle"></div>
+      </div>
+ 
+      <!-- Cola de reproducción (sin funcionalidad conectada todavía, solo visual) -->
+      <button class="ctrl" aria-label="Cola de reproducción">
+        <svg viewBox="0 0 24 24"><path d="M4 6h11M4 12h11M4 18h6"/><path d="M17 15l3 3 3-3M20 6v12"/></svg>
+      </button>
+ 
+      <!-- Botón de "expandir" (pensado para, por ejemplo, mostrar el reproductor en pantalla completa más adelante; hoy solo existe visualmente) -->
+      <button class="ctrl" aria-label="Expandir" id="expandBtn">
+        <svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></svg>
+      </button>
+    </div>
+  </footer>
+  
+ 
+</div>
+ 
+<!-- Toda la lógica de esta página: generación de tarjetas, reproductor, progreso, volumen, carrusel del hero, scroll hint, etc. -->
+ <audio id="audioPlayer"></audio>
+<script src="js/favoritos.js"></script>
+</body>
+</html>

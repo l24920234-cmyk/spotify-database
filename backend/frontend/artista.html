@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MusicIk | Artista</title>
+
+    <link rel="stylesheet" href="css/artista.css">
+
+</head>
+
+<body>
+
+    <div class="playlist-container">
+
+        <div class="playlist-header">
+
+            <img id="artistImage" src="" alt="Artista">
+
+            <div>
+
+                <h1 id="artistName"></h1>
+
+                <p id="artistGenre"></p>
+
+                <div class="artist-stats">
+
+    <span id="artistCountry"></span>
+
+    <span id="artistFollowers"></span>
+
+    <span id="artistAlbums"></span>
+
+    <span id="artistSongs"></span>
+
+</div>
+
+<div class="artist-bio">
+
+    <h3>Biografía</h3>
+
+    <p id="artistBio"></p>
+
+</div>
+
+                <button id="playAllBtn">
+
+                    ▶ Reproducir todo
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <div id="songsContainer"></div>
+
+    </div>
+
+    <footer class="player-bar">
+
+        <div class="player-track">
+
+            <img id="playerCover" src="" alt="">
+
+            <div>
+
+                <p class="p-title" id="playerTitle">
+
+                    Selecciona una canción
+
+                </p>
+
+                <p class="p-artist" id="playerArtist">
+
+                    MusicIk
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="player-center">
+
+            <div class="player-controls">
+
+                <button id="prevBtn" class="ctrl">
+
+                    ⏮
+
+                </button>
+
+                <button id="playBtn" class="ctrl play">
+
+                    ▶
+
+                </button>
+
+                <button id="nextBtn" class="ctrl">
+
+                    ⏭
+
+                </button>
+
+            </div>
+
+            <div class="progress-row">
+
+                <span id="curTime">0:00</span>
+
+                <input
+                    type="range"
+                    id="progressBar"
+                    value="0"
+                    min="0"
+                    max="100">
+
+                <span id="durTime">0:00</span>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+    <audio id="audioPlayer"></audio>
+
+    <script src="js/artista.js"></script>
+
+</body>
+
+</html>

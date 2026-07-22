@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MusicIk — Crear cuenta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+ 
+<div class="scene">
+ 
+  <!-- Fondo animado -->
+  <div class="mesh"></div>
+  <div class="notes" id="notes"></div>
+ 
+  <!-- ===== IZQUIERDA: Showcase con tornamesa (igual que login) ===== -->
+  <div class="showcase">
+ 
+    <div class="brand">
+      <span class="brand-icon">♪</span>
+      <span class="brand-name">MusicIk</span>
+    </div>
+ 
+    <div class="turntable-stage">
+      <div class="turntable">
+        <div class="platter">
+          <div class="vinyl" id="vinyl">
+            <div class="vinyl-grooves"></div>
+            <div class="vinyl-label">
+              <img src="assets/images/covers/infinity.jpg" alt="" onerror="this.parentElement.classList.add('img-error')">
+            </div>
+            <div class="vinyl-shine"></div>
+          </div>
+        </div>
+        <div class="tonearm" id="tonearm">
+          <div class="tonearm-base"></div>
+          <div class="tonearm-rod">
+            <div class="tonearm-head"></div>
+          </div>
+        </div>
+      </div>
+      <p class="now-spinning">
+        <span class="live-dot"></span>
+        Únete — <strong>Miles</strong> · ya están escuchando
+      </p>
+    </div>
+ 
+    <div class="waveform" id="waveform" aria-hidden="true"></div>
+ 
+    <div class="showcase-copy">
+      <h1>Crea tu cuenta<br>en segundos.</h1>
+      <p>Guarda tus playlists, sigue tus artistas favoritos y retoma justo donde lo dejaste, en cualquier dispositivo.</p>
+    </div>
+  </div>
+ 
+  <!-- ===== DERECHA: Formulario ===== -->
+  <div class="auth-panel">
+    <form class="auth-card" id="registerForm" novalidate>
+ 
+      <div class="auth-head">
+        <div class="auth-icon"><span>♪</span></div>
+        <h2>Crea tu cuenta</h2>
+        <p class="auth-sub">Es gratis y toma menos de un minuto</p>
+      </div>
+ 
+      <div class="field-group" id="nombreGroup">
+        <div class="field" id="nombreField">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+          <input type="text" id="nombre" placeholder=" " autocomplete="name" required>
+          <label for="nombre">Nombre completo</label>
+          <svg class="check-icon" viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg>
+        </div>
+        <p class="error-msg" id="nombreError">Ingresa tu nombre</p>
+      </div>
+ 
+      <div class="field-group" id="emailGroup">
+        <div class="field" id="emailField">
+          <svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/><path d="m3 7 9 6 9-6"/></svg>
+          <input type="email" id="email" placeholder=" " autocomplete="email" required>
+          <label for="email">Correo electrónico</label>
+          <svg class="check-icon" viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg>
+        </div>
+        <p class="error-msg" id="emailError">Ingresa un correo válido</p>
+      </div>
+ 
+      <div class="field-group" id="passGroup">
+        <div class="field" id="passField">
+          <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          <input type="password" id="password" placeholder=" " autocomplete="new-password" required>
+          <label for="password">Contraseña</label>
+          <button type="button" class="toggle-pass" id="togglePass" aria-label="Mostrar contraseña">
+            <svg class="eye-open" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg class="eye-closed" viewBox="0 0 24 24" style="display:none"><path d="M3 3l18 18"/><path d="M10.6 10.6a3 3 0 0 0 4.2 4.2"/><path d="M6.5 6.7C4.3 8.1 2 12 2 12s3.5 7 10 7c1.6 0 3-.4 4.2-1.1M17.6 17.6C19.6 16.2 22 12 22 12s-1-2-3-3.9"/></svg>
+          </button>
+        </div>
+        <p class="error-msg" id="passError">Mínimo 4 caracteres</p>
+      </div>
+ 
+      <div class="field-group" id="pass2Group">
+        <div class="field" id="pass2Field">
+          <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          <input type="password" id="password2" placeholder=" " autocomplete="new-password" required>
+          <label for="password2">Confirmar contraseña</label>
+          <svg class="check-icon" viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg>
+        </div>
+        <p class="error-msg" id="pass2Error">Las contraseñas no coinciden</p>
+      </div>
+ 
+      <label class="checkbox terms-checkbox">
+        <input type="checkbox" id="terms" required>
+        <span class="box"></span>
+        Acepto los <a href="#" class="link-inline">Términos</a> y la <a href="#" class="link-inline">Privacidad</a>
+      </label>
+      <p class="error-msg" id="termsError">Debes aceptar los términos para continuar</p>
+ 
+      <button type="submit" class="btn-submit" id="submitBtn">
+        <span class="btn-shine"></span>
+        <span class="btn-text">Crear cuenta</span>
+        <svg class="btn-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span class="btn-spinner"></span>
+      </button>
+ 
+      <div class="divider"><span>o continúa con</span></div>
+ 
+      <div class="social-row">
+        <button type="button" class="social-btn" aria-label="Google">
+          <svg viewBox="0 0 24 24"><path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.7 4.1-5.5 4.1-3.3 0-6-2.7-6-6.2s2.7-6.2 6-6.2c1.9 0 3.1.8 3.9 1.5l2.6-2.5C16.9 3.2 14.7 2.2 12 2.2 6.9 2.2 2.7 6.4 2.7 11.5S6.9 20.8 12 20.8c6.9 0 9.1-4.8 9.1-7.3 0-.5 0-.9-.1-1.3z"/></svg>
+        </button>
+        <button type="button" class="social-btn" aria-label="Spotify">
+          <svg viewBox="0 0 24 24" fill="#1DB954" stroke="none"><circle cx="12" cy="12" r="10"/><path stroke="#0b0a12" stroke-width="1.6" fill="none" d="M7 9.5c3-1 7-.6 9.5.9M7.3 13c2.4-.7 5.6-.4 7.7.8M7.6 16.2c2-.5 4.4-.3 6 .6"/></svg>
+        </button>
+        <button type="button" class="social-btn" aria-label="Apple">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M16.4 6.5c-.9.05-1.95.6-2.6 1.35-.55.65-1.05 1.65-.9 2.65 1 .1 2-.5 2.6-1.3.6-.65 1-1.6.9-2.7zM19.2 17c-.5 1.1-.75 1.6-1.4 2.55-.9 1.3-2.15 2.95-3.75 2.95-1.4 0-1.75-.9-3.65-.9-1.85 0-2.3.9-3.7.9-1.6 0-2.8-1.5-3.7-2.8C1.05 17.4.3 14 1.35 11.7c.75-1.65 2.05-2.6 3.6-2.6 1.5 0 2.45.9 3.65.9 1.2 0 2-.9 3.65-.9 1.15 0 2.4.6 3.25 1.65-2.85 1.55-2.4 5.6.7 6.25z"/></svg>
+        </button>
+      </div>
+ 
+      <p class="switch-auth">¿Ya tienes cuenta? <a href="login.html">Iniciar sesión</a></p>
+    </form>
+  </div>
+ 
+</div>
+ 
+<script src="js/register.js"></script>
+</body>
+</html>

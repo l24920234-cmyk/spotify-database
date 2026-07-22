@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MusicIk — Iniciar sesión</title>
+ 
+<!-- 
+  Google Fonts: 
+  - "Outfit" se usa para títulos/marca (más geométrica y llamativa)
+  - "Inter" se usa para texto normal (más legible en tamaños chicos)
+  El "preconnect" solo le dice al navegador "vas a necesitar este servidor 
+  pronto", para que empiece a conectarse antes y la fuente cargue más rápido.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+ 
+<!-- Aquí viven todos los estilos y animaciones de esta página -->
+<link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+ 
+<!-- 
+  ============================================================
+  .scene = el contenedor de TODA la pantalla de login.
+  Es un grid de 2 columnas: showcase (izquierda) + auth-panel (derecha).
+  Ver css/login.css → ".scene{ display:grid; grid-template-columns:... }"
+  ============================================================ 
+-->
+<div class="scene">
+ 
+  <!-- 
+    Fondo animado, puramente decorativo (no tiene contenido real, por eso 
+    aria-hidden más abajo en .waveform). 
+    - .mesh: el degradado de colores que "respira" de fondo (animación CSS)
+    - .notes: contenedor donde login.js va a inyectar con JavaScript varias
+      notas musicales (♪ ♫ ♬) flotando hacia arriba
+  -->
+  <div class="mesh"></div>
+  <div class="notes" id="notes"></div>
+ 
+  <!-- ===== IZQUIERDA: Showcase con tornamesa ===== -->
+  <!-- Este panel es solo visual/marketing, no tiene inputs ni lógica de formulario -->
+  <div class="showcase">
+ 
+    <!-- Logo + nombre de la marca -->
+    <div class="brand">
+      <span class="brand-icon">♪</span>
+      <span class="brand-name">MusicIk</span>
+    </div>
+ 
+    <!-- 
+      Bloque del "tocadiscos" animado: disco de vinilo girando + brazo 
+      (tonearm) que cae sobre el disco. Todo el movimiento (giro, caída del 
+      brazo, brillo) se hace con @keyframes en login.css, esto de aquí es 
+      solo la estructura de capas (una encima de otra).
+    -->
+    <div class="turntable-stage">
+      <div class="turntable">
+ 
+        <!-- Base circular de la tornamesa -->
+        <div class="platter">
+ 
+          <!-- El disco de vinilo en sí (gira sin parar vía CSS animation) -->
+          <div class="vinyl" id="vinyl">
+ 
+            <!-- Los "surcos" del disco, dibujados con un degradado radial repetido -->
+            <div class="vinyl-grooves"></div>
+ 
+            <!-- La etiqueta central del disco: aquí se muestra la portada de la canción -->
+            <div class="vinyl-label">
+              <img src="assets/images/covers/dreams.jpg" alt="" onerror="this.parentElement.classList.add('img-error')">
+              <!-- 
+                onerror: si la img no carga (ruta incorrecta o archivo 
+                faltante), en vez de mostrar el ícono roto del navegador, le 
+                agrega la clase "img-error" a su contenedor, que en el CSS 
+                tiene un fondo de respaldo (degradado) para que no se vea feo.
+              -->
+            </div>
+ 
+            <!-- Capa de brillo/reflejo encima del disco, para dar efecto de plástico brillante -->
+            <div class="vinyl-shine"></div>
+          </div>
+        </div>
+ 
+        <!-- El brazo de la tornamesa (tonearm), con su base y la "aguja" -->
+        <div class="tonearm" id="tonearm">
+          <div class="tonearm-base"></div>
+          <div class="tonearm-rod">
+            <div class="tonearm-head"></div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Texto tipo "now playing" debajo del disco, con un punto que parpadea (live-dot) -->
+      <p class="now-spinning">
+        <span class="live-dot"></span>
+        Sonando ahora — <strong>Efecto</strong> · Bad Bunny
+      </p>
+    </div>
+ 
+    <!-- 
+      Ecualizador ambiental (las barritas que suben y bajan). Está vacío 
+      aquí a propósito: login.js genera dinámicamente muchos <span> con 
+      alturas y velocidades aleatorias y los mete aquí adentro con 
+      JavaScript, para que cada vez que cargues la página se vea distinto.
+      aria-hidden="true" = le dice a lectores de pantalla "ignora esto, es 
+      pura decoración, no aporta información".
+    -->
+    <div class="waveform" id="waveform" aria-hidden="true"></div>
+ 
+    <!-- Texto de marketing/bienvenida del panel izquierdo -->
+    <div class="showcase-copy">
+      <h1>Dale play<br>a lo que sientes.</h1>
+      <p>Tu biblioteca, tus playlists y tu sonido, esperándote justo donde lo dejaste.</p>
+    </div>
+  </div>
+ 
+  <!-- ===== DERECHA: Formulario ===== -->
+  <!-- Aquí sí está toda la lógica real: el formulario que login.js valida y envía al backend -->
+  <div class="auth-panel">
+ 
+    <!-- 
+      novalidate: le dice al navegador "no uses tu validación nativa (los 
+      globitos feos de 'rellena este campo')". En vez de eso, login.js hace 
+      su propia validación personalizada, con animaciones y mensajes en 
+      español.
+    -->
+    <form class="auth-card" id="loginForm" novalidate>
+ 
+      <!-- Encabezado del formulario: ícono + título + subtítulo -->
+      <div class="auth-head">
+        <div class="auth-icon"><span>♪</span></div>
+        <h2>¡Bienvenida de nuevo!</h2>
+        <p class="auth-sub">Inicia sesión para seguir escuchando</p>
+      </div>
+ 
+      <!-- 
+        ===== CAMPO: Correo electrónico =====
+        Técnica de "floating label": el <label> normalmente se ve como si 
+        fuera un placeholder dentro del input, pero cuando escribes (o el 
+        input tiene foco) "sube" arriba del campo. Esto se logra en CSS con 
+        el truco de placeholder=" " (un espacio en blanco) + el selector 
+        ":not(:placeholder-shown)".
+      -->
+      <div class="field-group" id="emailGroup">
+        <div class="field" id="emailField">
+          <!-- Ícono de sobre (correo) -->
+          <svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/><path d="m3 7 9 6 9-6"/></svg>
+ 
+          <input type="email" id="email" placeholder=" " autocomplete="email" required>
+          <label for="email">Correo electrónico</label>
+ 
+          <!-- 
+            Ícono de "palomita" (check) verde. Está oculto por defecto vía 
+            CSS y solo aparece (con una animación) cuando login.js le agrega 
+            la clase "valid" al contenedor .field, es decir, cuando el 
+            correo escrito es válido.
+          -->
+          <svg class="check-icon" viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg>
+        </div>
+ 
+        <!-- 
+          Mensaje de error. Está siempre en el HTML, pero login.js le 
+          agrega/quita la clase "show" para hacerlo aparecer/desaparecer 
+          con una transición, en vez de mostrarlo y ocultarlo de golpe.
+        -->
+        <p class="error-msg" id="emailError">Ingresa un correo válido</p>
+      </div>
+ 
+      <!-- ===== CAMPO: Contraseña ===== (misma lógica de floating label que el de arriba) -->
+      <div class="field-group" id="passGroup">
+        <div class="field" id="passField">
+          <!-- Ícono de candado -->
+          <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+ 
+          <input type="password" id="password" placeholder=" " autocomplete="current-password" required>
+          <label for="password">Contraseña</label>
+ 
+          <!-- 
+            Botón de mostrar/ocultar contraseña. type="button" (no "submit") 
+            para que NO envíe el formulario al hacer click, solo ejecute su 
+            propio evento de click definido en login.js.
+            Adentro hay DOS íconos de ojo (abierto/tachado): login.js 
+            alterna cuál de los dos se muestra según el estado.
+          -->
+          <button type="button" class="toggle-pass" id="togglePass" aria-label="Mostrar contraseña">
+            <svg class="eye-open" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg class="eye-closed" viewBox="0 0 24 24" style="display:none"><path d="M3 3l18 18"/><path d="M10.6 10.6a3 3 0 0 0 4.2 4.2"/><path d="M6.5 6.7C4.3 8.1 2 12 2 12s3.5 7 10 7c1.6 0 3-.4 4.2-1.1M17.6 17.6C19.6 16.2 22 12 22 12s-1-2-3-3.9"/></svg>
+          </button>
+        </div>
+        <p class="error-msg" id="passError">La contraseña es obligatoria</p>
+      </div>
+ 
+      <!-- Fila con el checkbox "Recordarme" y el link de "¿Olvidaste tu contraseña?" -->
+      <div class="row-between">
+        <label class="checkbox">
+          <!-- 
+            El input real está oculto (display:none en CSS) y en su lugar 
+            se muestra el <span class="box">, que se dibuja distinto según 
+            si el checkbox de al lado está marcado (usando el selector CSS 
+            "input:checked + .box"). Es un truco común para poder diseñar 
+            checkboxes personalizados.
+          -->
+          <input type="checkbox" id="remember">
+          <span class="box"></span>
+          Recordarme
+        </label>
+        <a href="#" class="link-muted">¿Olvidaste tu contraseña?</a>
+      </div>
+ 
+      <!-- 
+        ===== BOTÓN PRINCIPAL: Iniciar sesión =====
+        type="submit" → este SÍ dispara el evento "submit" del <form>, que 
+        es donde login.js intercepta el envío, valida los campos y hace el 
+        fetch() al backend.
+      -->
+      <button type="submit" class="btn-submit" id="submitBtn">
+        <!-- Barra de brillo que cruza el botón en loop (animación CSS "shine") -->
+        <span class="btn-shine"></span>
+ 
+        <!-- Texto normal del botón -->
+        <span class="btn-text">Iniciar sesión</span>
+ 
+        <!-- Flechita al lado del texto -->
+        <svg class="btn-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+ 
+        <!-- 
+          Spinner de "cargando". Está oculto por defecto (ver CSS: 
+          .btn-spinner{ display:none }). Cuando login.js agrega la clase 
+          "loading" al botón mientras espera la respuesta del servidor, el 
+          CSS oculta btn-text/btn-arrow y muestra este spinner en su lugar.
+        -->
+        <span class="btn-spinner"></span>
+      </button><
+      <!-- 
+        ⚠️ NOTA (no lo cambié, solo lo marco): aquí sobra un "<" suelto 
+        después de </button>. No debería estar ahí — probablemente quedó 
+        de un borrado a medias. No suele romper la página porque los 
+        navegadores son tolerantes con HTML mal formado, pero lo ideal es 
+        quitarlo cuando lo edites tú mismo.
+      -->
+ 
+      <!-- Separador visual "o continúa con" -->
+      <div class="divider"><span>o continúa con</span></div>
+ 
+      <!-- 
+        Botones de login social (Google, Spotify, Apple). Todos son 
+        type="button" porque, igual que el de mostrar/ocultar contraseña, 
+        NO deben enviar el formulario — por ahora no tienen lógica conectada 
+        (no hacen nada al hacer click), son solo visuales/decorativos.
+      -->
+      <div class="social-row">
+        <button type="button" class="social-btn" aria-label="Google">
+          <svg viewBox="0 0 24 24"><path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.7 4.1-5.5 4.1-3.3 0-6-2.7-6-6.2s2.7-6.2 6-6.2c1.9 0 3.1.8 3.9 1.5l2.6-2.5C16.9 3.2 14.7 2.2 12 2.2 6.9 2.2 2.7 6.4 2.7 11.5S6.9 20.8 12 20.8c6.9 0 9.1-4.8 9.1-7.3 0-.5 0-.9-.1-1.3z"/></svg>
+        </button>
+        <button type="button" class="social-btn" aria-label="Spotify">
+          <svg viewBox="0 0 24 24" fill="#1DB954" stroke="none"><circle cx="12" cy="12" r="10"/><path stroke="#0b0a12" stroke-width="1.6" fill="none" d="M7 9.5c3-1 7-.6 9.5.9M7.3 13c2.4-.7 5.6-.4 7.7.8M7.6 16.2c2-.5 4.4-.3 6 .6"/></svg>
+        </button>
+        <button type="button" class="social-btn" aria-label="Apple">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M16.4 6.5c-.9.05-1.95.6-2.6 1.35-.55.65-1.05 1.65-.9 2.65 1 .1 2-.5 2.6-1.3.6-.65 1-1.6.9-2.7zM19.2 17c-.5 1.1-.75 1.6-1.4 2.55-.9 1.3-2.15 2.95-3.75 2.95-1.4 0-1.75-.9-3.65-.9-1.85 0-2.3.9-3.7.9-1.6 0-2.8-1.5-3.7-2.8C1.05 17.4.3 14 1.35 11.7c.75-1.65 2.05-2.6 3.6-2.6 1.5 0 2.45.9 3.65.9 1.2 0 2-.9 3.65-.9 1.15 0 2.4.6 3.25 1.65-2.85 1.55-2.4 5.6.7 6.25z"/></svg>
+        </button>
+      </div>
+ 
+      <!-- Link para ir a la página de registro (register.html) si no tienes cuenta -->
+      <p class="switch-auth">¿No tienes cuenta? <a href="register.html">Crear cuenta</a></p>
+    </form>
+  </div>
+ 
+</div>
+ 
+<!-- 
+  Aquí se carga TODA la lógica de esta página: validación de campos, 
+  animación del ecualizador y las notas flotantes, efecto tilt del vinilo 
+  con el mouse, mostrar/ocultar contraseña, y el fetch() que envía los 
+  datos al backend (server.js → routes/auth.js → MySQL).
+  Va al final del <body> para que el HTML ya esté completo antes de que 
+  el script intente buscar elementos con getElementById/querySelector.
+-->
+<script src="js/login.js"></script>
+</body>
+</html>
