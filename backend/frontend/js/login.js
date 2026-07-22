@@ -278,7 +278,7 @@ passInput.addEventListener('input', () => {
     // 🔑 AQUÍ ES DONDE SE CONECTA CON TU BACKEND 
     //Lo estoy utilizando para enviar el correo y la contraseña al servidor Node.js cuando el usuario inicia sesión.
     //La función fetch() manda una petición POST a la ruta /api/login, que es atendida por mi servidor hecho con Node.js y Express. 
-    fetch(`${window.location.protocol}//${window.location.hostname}:3001/api/login`, {
+    fetch(`${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}/api/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }, // le avisamos al servidor "lo que te mando viene en formato JSON"
       body: JSON.stringify({ correo: emailValue, password: passValue })

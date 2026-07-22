@@ -8,7 +8,7 @@
 //   DELETE /api/usuarios/:id        -> borrar
 // ============================================================
  
-const API_BASE = `${window.location.protocol}//${window.location.hostname}:3001/api`;
+const API_BASE = `${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}/api`;
  
 document.addEventListener('DOMContentLoaded', () => {
  
