@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (card) {
             const index = Number(card.dataset.index);
             const nombre = playlists[index].name;
-           window.parent.location.href = "../playlist.html?name=" + encodeURIComponent(nombre);
+          window.parent.document.getElementById("contentFrame").src = "views/playlist-content.html?name=" + encodeURIComponent(nombre);
         }
 
     });
