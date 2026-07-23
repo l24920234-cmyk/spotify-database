@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artista</title>
+<link rel="stylesheet" href="../css/artista.css">
+<style>
+  html, body { height:100%; overflow-y:auto; }
+</style>
+</head>
+<body>
+
+<div class="playlist-container">
+
+  <div class="playlist-header">
+    <img id="artistImage" src="" alt="Artista">
+    <div>
+      <h1 id="artistName"></h1>
+      <p id="artistGenre"></p>
+
+      <div class="artist-stats">
+        <span id="artistCountry"></span>
+        <span id="artistFollowers"></span>
+        <span id="artistAlbums"></span>
+        <span id="artistSongs"></span>
+      </div>
+
+      <div class="artist-bio">
+        <h3>Biografía</h3>
+        <p id="artistBio"></p>
+      </div>
+
+      <button id="playAllBtn">▶ Reproducir todo</button>
+    </div>
+  </div>
+
+  <div id="songsContainer"></div>
+
+</div>
+
+<script src="artista-content.js"></script>
+</body>
+</html>
