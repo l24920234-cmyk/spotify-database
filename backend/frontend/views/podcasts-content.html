@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Podcasts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/home.css">
+<link rel="stylesheet" href="../css/podcasts.css">
+<style>
+  html, body { height:100%; overflow:hidden; }
+  .main { height:100%; display:flex; flex-direction:column; }
+</style>
+</head>
+<body>
+
+<main class="main">
+
+  <header class="topbar">
+    <div class="search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="text" placeholder="Buscar canciones, artistas, álbumes…">
+      <button class="filter-btn" aria-label="Filtros">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M8 12h12M12 18h8"/><circle cx="5" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/></svg>
+      </button>
+    </div>
+    <div class="topbar-actions">
+      <button class="bell-btn" aria-label="Notificaciones">
+        <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5H4.5S6 12 6 8z"/><path d="M9.5 17a2.5 2.5 0 0 0 5 0"/></svg>
+        <span class="dot"></span>
+      </button>
+      <button class="profile">
+        <img src="../assets/images/profile/leti.jpg" alt="Leti">
+        <span>Leti</span>
+        <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="scroll-area">
+
+    <section class="podcasts-section">
+
+      <div class="page-title">
+        <h1>🎙️ Podcasts</h1>
+        <p>Escucha los mejores podcasts de tecnología, música y entretenimiento.</p>
+      </div>
+
+      <div class="podcast-grid" id="podcastGrid"></div>
+
+    </section>
+
+  </div>
+
+</main>
+
+<script src="podcasts-content.js"></script>
+</body>
+</html>
