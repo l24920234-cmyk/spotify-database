@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inicio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/home.css">
+<style>
+  /* Este archivo vive DENTRO del iframe, así que solo necesita el estilo de .main, no todo el grid */
+  html, body { height:100%; background:var(--bg); overflow:hidden; }
+  .main { height:100%; display:flex; flex-direction:column; }
+</style>
+</head>
+<body>
+
+<main class="main">
+
+  <header class="topbar">
+    <div class="search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="text" placeholder="Buscar canciones, artistas, álbumes…">
+      <button class="filter-btn" aria-label="Filtros">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M8 12h12M12 18h8"/><circle cx="5" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/></svg>
+      </button>
+    </div>
+    <div class="topbar-actions">
+      <button class="bell-btn" aria-label="Notificaciones">
+        <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5H4.5S6 12 6 8z"/><path d="M9.5 17a2.5 2.5 0 0 0 5 0"/></svg>
+        <span class="dot"></span>
+      </button>
+      <button class="profile">
+        <img src="../assets/images/profile/leti.jpg" alt="Leti">
+        <span>Leti</span>
+        <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="scroll-area">
+
+    <section class="hero">
+      <div class="hero-slide active" style="--img:url('../assets/images/hero/hero-1.jpg'); background-image:linear-gradient(180deg, rgba(12,10,20,.15), rgba(12,10,20,.75)), url('../assets/images/hero/hero-1.jpg')"></div>
+
+      <div class="hero-content">
+        <p class="hero-greeting">¡Hola! <span class="wave">👋</span></p>
+        <h1>Disfruta tu música favorita</h1>
+        <button class="btn-play-all" id="playAllBtn">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          Reproducir todo
+        </button>
+      </div>
+
+      <div class="hero-dots">
+        <button class="dot-ind active"></button>
+        <button class="dot-ind"></button>
+        <button class="dot-ind"></button>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="row-head">
+        <h2>Recomendado para ti</h2>
+        <a href="#" class="see-all">Ver todo</a>
+      </div>
+      <div class="card-grid" id="recommendedGrid"></div>
+    </section>
+
+    <section class="row">
+      <div class="row-head">
+        <h2>Tendencias</h2>
+        <a href="#" class="see-all">Ver todo</a>
+      </div>
+      <div class="card-grid" id="trendingGrid"></div>
+    </section>
+
+  </div>
+
+</main>
+
+<script src="../js/home-content.js"></script>
+</body>
+</html>
