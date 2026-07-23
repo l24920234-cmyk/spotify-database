@@ -21,8 +21,8 @@ app.use(express.json());
 // Servir los archivos del frontend
 const fs = require("fs");
 const frontendCandidates = [
-    path.join(__dirname, "../frontend"),
-    path.join(__dirname, "frontend")
+    path.join(__dirname, "frontend"),
+    path.join(__dirname, "../frontend")
 ];
 const frontendPath = frontendCandidates.find(p => fs.existsSync(p)) || frontendCandidates[0];
 app.use(express.static(frontendPath));
