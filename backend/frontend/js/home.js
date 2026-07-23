@@ -19,6 +19,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const audioPlayer = document.getElementById("audioPlayer");
 
+    const PLAYER_STATE_KEY = "musicik_player_state";
+
+    function guardarEstadoReproductor() {
+        if (!audioPlayer.src) return;
+        localStorage.setItem(PLAYER_STATE_KEY, JSON.stringify({
+            src: audioPlayer.src,
+            time: audioPlayer.currentTime,
+            playing: isPlaying,
+            titulo: document.getElementById("playerTitle").textContent,
+            artista: document.getElementById("playerArtist").textContent,
+            imagen: document.getElementById("playerCover").src
+        }));
+    }
+
+    function restaurarEstadoReproductor() {
+        const guardado = localStorage.getItem(PLAYER_STATE_KEY);
+        if (!guardado) return;
+
+        try {
+            const estado = JSON.parse(guardado);
+            if (!estado.src) return;
+
+            audioPlayer.src = estado.src;
+            audioPlayer.currentTime = estado.time || 0;
+
+            document.getElementById("playerTitle").textContent = estado.titulo;
+            document.getElementById("playerArtist").textContent = estado.artista;
+            document.getElementById("playerCover").src = estado.imagen;
+
+            if (estado.playing) {
+                audioPlayer.play().then(() => {
+                    isPlaying = true;
+                    document.getElementById("playIcon").style.display = "none";
+                    document.getElementById("pauseIcon").style.display = "";
+                    startProgress();
+                }).catch(() => {
+                    // El navegador bloqueó el autoplay; se queda pausado
+                    isPlaying = false;
+                });
+            }
+        } catch (error) {
+            console.error("No se pudo restaurar el reproductor:", error);
+        }
+    }
+
     const recGrid = document.getElementById("recommendedGrid");
     const trendGrid = document.getElementById("trendingGrid");
     const exploreGrid = document.getElementById("exploreGrid");
@@ -283,7 +328,7 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 
-    function playTrack() {
+ function playTrack() {
 
         isPlaying = true;
 
@@ -294,10 +339,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         startProgress();
 
+        guardarEstadoReproductor();
+
     }
 
 
-    function pauseTrack() {
+   function pauseTrack() {
 
         isPlaying = false;
 
@@ -307,6 +354,8 @@ document.addEventListener("DOMContentLoaded", () => {
         audioPlayer.pause();
 
         clearInterval(progressTimer);
+
+        guardarEstadoReproductor();
 
     }
 
@@ -499,6 +548,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     audioPlayer.addEventListener("timeupdate", renderProgress);
+    audioPlayer.addEventListener("timeupdate", () => {
+        if (Math.floor(audioPlayer.currentTime) % 3 === 0) {
+            guardarEstadoReproductor();
+        }
+    });
 
     audioPlayer.addEventListener("loadedmetadata", renderProgress);
 
@@ -701,15 +755,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    // ============================================================
+  // ============================================================
     // INICIALIZACIÓN
     // ============================================================
+
+    restaurarEstadoReproductor();
 
     cargarCanciones();
 
     renderProgress();
 
     updateScrollHint();
+
+    window.addEventListener("beforeunload", guardarEstadoReproductor);
 
 });
 
